@@ -70,4 +70,15 @@ Router.post("/login", async (req, res) => {
     }
 })
 
+Router.post("/logout", async (req, res)=>{
+ const clearcooke = await res.clearCookie("Token");
+
+if (clearcooke) {
+    return res.status(200).send("Logged out ")
+}
+else {
+    res.status(400).send("Failed to logout")
+}
+})
+
 module.exports = Router
