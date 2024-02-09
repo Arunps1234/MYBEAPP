@@ -20,10 +20,10 @@ Router.post("/create", async (req, res)=>{
         return res.json({"msg":"All fields are mandatory"})
     }
 
-    const checkUser = await User.findOne({email});
+    const checkUser = await User.find({            userEmail: Usersemail}).findOne({email});
 
     if (checkUser) {
-        return res.json({"msg":"User already in the list"})
+        return res.status(400).json({"msg":"User already in the list"})
     }
 
     else {
@@ -97,6 +97,23 @@ Router.get("/getUser/:id", async (req, res)=>{
 
     else {
         return res.json({"msg":"Failed to get user"})
+    }
+})
+
+
+// updateUser
+
+Router.put("/update/:id", async(req, res)=>{
+    const uid = req.params.id;
+
+    const updateUser = await User.findByIdAndUpdate(uid, req.body);
+
+    if(updateUser) {
+        res.json(updateUser)
+    }
+
+    else {
+        res.json({"msg":"Failed to update the user"})
     }
 })
 
